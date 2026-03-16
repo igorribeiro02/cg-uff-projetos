@@ -33,3 +33,29 @@ asa_direita = np.array([
 
 print("Corpo do Objeto:\n", corpo)
 print("Asa Direita:\n", asa_direita)
+
+
+#testando a reflexao da asa direita para criar o movimento da asa esquerda
+
+asa_esquerda = np.dot(reflexao_y(), asa_direita) # aplicando a reflexao no eixo y para criar a asa esquerda
+
+#configurar  o grafico que vai aparecer o objeto animado
+fig, ax = plt.subplots(figsize=(8, 8))
+
+#no eixo x, o limite vai de -6 a 6, e no eixo y, o limite vai de -4 a 4
+ax.set_xlim(-6, 6)
+ax.set_ylim(-5,5 )
+#impedindo que objeto fique esticado
+ax.set_aspect('equal')
+#plotando o corpo do objeto
+ax.grid(True, linestyle='--', alpha=0.5) # adicionando uma grade para facilitar a visualização
+
+
+# Desenhando as linhas estáticas
+ax.plot(corpo[0, :], corpo[1, :], 'k-', linewidth=4, label="Corpo")
+ax.plot(asa_direita[0, :], asa_direita[1, :], 'b-', linewidth=2, label="Asa Dir")
+ax.plot(asa_esquerda[0, :], asa_esquerda[1, :], 'g-', linewidth=2, label="Asa Esq")
+
+ax.legend() # adicionando legenda para identificar as partes do objeto
+ax.set_title('Objeto Animado - Estrutura Inicial') # título do gráfico
+plt.show() # exibindo o gráfico
