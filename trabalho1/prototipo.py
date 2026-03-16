@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # ==========================================
-# 1. FUNÇÕES MATEMÁTICAS (O "Motor" do PDF)
+# 1. FUNÇÕES MATEMÁTICAS 
 # ==========================================
 
 def translacao(tx, ty):
@@ -51,7 +51,7 @@ def reflexao(eixo):
 
 
 # ==========================================
-# 2. DEFININDO O OBJETO (BANGUELA SINTÉTICO)
+# 2. DEFININDO O OBJETO 
 # ==========================================
 # Cada coluna é um ponto [x, y, 1]. O último ponto repete o primeiro para fechar o desenho.
 
@@ -59,25 +59,25 @@ def reflexao(eixo):
 corpo = np.array([
     [0,  1,  1, -1, -1,  0],  # Coordenadas X
     [3,  1, -3, -3,  1,  3],  # Coordenadas Y
-    [1,  1,  1,  1,  1,  1]   # Coordenada Homogênea M=1 [cite: 458]
+    [1,  1,  1,  1,  1,  1]   # Coordenada Homogênea M=1 
 ])
 
 # Asa Direita (Conectada ao corpo no ponto X=1, Y=1)
 asa_direita = np.array([
     [1,  4,  3,  1,  1],  # Coordenadas X
     [1,  0, -2, -1,  1],  # Coordenadas Y
-    [1,  1,  1,  1,  1]   # Coordenada Homogênea M=1 [cite: 458]
+    [1,  1,  1,  1,  1]   # Coordenada Homogênea M=1 
 ])
 
 # ==========================================
 # 3. APLICANDO AS TRANSFORMAÇÕES (A MÁGICA)
 # ==========================================
 
-# A. Criando a Asa Esquerda automaticamente com Reflexão! 
+# A. Criando a Asa Esquerda automaticamente com Reflexão
 asa_esquerda = np.dot(reflexao('y'), asa_direita)
 
-# B. Fazendo a Asa Direita "bater" (Composição de Transformações) [cite: 310-313]
-# Regra do PDF: Transladar P(1,1) para origem -> Transformar -> Transladar de volta [cite: 312-313]
+# B. Fazendo a Asa Direita "bater" (Composição de Transformações) 
+# Regra do PDF: Transladar P(1,1) para origem -> Transformar -> Transladar de volta 
 ponto_articulacao_x = 1
 ponto_articulacao_y = 1
 
@@ -104,6 +104,8 @@ plt.plot(asa_esquerda[0, :], asa_esquerda[1, :], 'gray', linewidth=2, label="Asa
 # Desenhando a Asa Animada (Vermelho)
 plt.plot(asa_direita_batendo[0, :], asa_direita_batendo[1, :], 'r-', linewidth=3, label="Asa Direita (Batendo)")
 
+#Desenhando a asa animada Esquerda
+plt.plot(np.dot(matriz_bater_asa, asa_esquerda)[0, :], np.dot(matriz_bater_asa, asa_esquerda)[1, :], 'r-', linewidth=3, label="Asa Esquerda (Batendo)")
 # Configurações do gráfico
 plt.axhline(0, color='black', linewidth=0.5)
 plt.axvline(0, color='black', linewidth=0.5)
